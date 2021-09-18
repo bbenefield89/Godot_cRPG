@@ -1,0 +1,150 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://Characters/PlayerCharacter/PlayerCharacter.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Characters/Enemies/Enemy.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Cameras/Camera2D.gd" type="Script" id=3]
+[ext_resource path="res://1px_sprite.png" type="Texture" id=4]
+[ext_resource path="res://Characters/ActorsContainer.gd" type="Script" id=5]
+[ext_resource path="res://World.gd" type="Script" id=7]
+
+[sub_resource type="NavigationPolygon" id=1]
+vertices = PoolVector2Array( 584.951, 377.021, 663.527, 420.674, 115.874, 424.643, 560.346, 378.608, 327.792, 70.6524, 328.586, 172.246, 258.74, 114.306, 257.946, 82.5579, 220.642, 116.687, 203.181, 172.246, 124.605, 141.292, 661.94, 19.0618, 583.363, 71.4461, 14.2802, 18.2681, 222.23, 80.9705, 125.398, 61.9217, 244.453, 272.252, 442.085, 272.252, 440.497, 352.416, 226.992, 351.622, 224.611, 196.851, 247.628, 249.235, 353.19, 199.232, 466.689, 249.235, 127.779, 172.246, 13.4865, 170.659, 13.4865, 139.704, 353.19, 99.2256, 560.346, 100.019, 467.483, 377.021, 201.593, 378.608, 116.668, 195.263, 127.779, 193.676, 15.0739, 61.9217 )
+polygons = [ PoolIntArray( 0, 1, 2, 3 ), PoolIntArray( 4, 5, 6, 7 ), PoolIntArray( 8, 6, 5, 9, 10 ), PoolIntArray( 11, 1, 0, 12 ), PoolIntArray( 13, 11, 12, 4 ), PoolIntArray( 13, 4, 7, 14, 15 ), PoolIntArray( 16, 17, 18, 19 ), PoolIntArray( 16, 19, 20, 21 ), PoolIntArray( 21, 20, 22, 23 ), PoolIntArray( 24, 25, 26, 10, 9 ), PoolIntArray( 22, 27, 28, 23 ), PoolIntArray( 23, 28, 3, 29 ), PoolIntArray( 29, 3, 2, 30 ), PoolIntArray( 30, 2, 31, 32 ), PoolIntArray( 9, 30, 32, 24 ), PoolIntArray( 15, 33, 13 ), PoolIntArray( 10, 15, 14, 8 ) ]
+outlines = [ PoolVector2Array( 14.2802, 18.2681, 661.94, 19.0618, 663.527, 420.674, 115.874, 424.643, 116.668, 195.263, 127.779, 193.676, 127.779, 172.246, 13.4865, 170.659, 13.4865, 139.704, 124.605, 141.292, 125.398, 61.9217, 15.0739, 61.9217 ), PoolVector2Array( 222.23, 80.9705, 257.946, 82.5579, 258.74, 114.306, 220.642, 116.687 ), PoolVector2Array( 203.181, 172.246, 328.586, 172.246, 327.792, 70.6524, 583.363, 71.4461, 584.951, 377.021, 560.346, 378.608, 560.346, 100.019, 353.19, 99.2256, 353.19, 199.232, 224.611, 196.851, 226.992, 351.622, 440.497, 352.416, 442.085, 272.252, 244.453, 272.252, 247.628, 249.235, 466.689, 249.235, 467.483, 377.021, 201.593, 378.608 ) ]
+
+[node name="World" type="Node2D"]
+script = ExtResource( 7 )
+
+[node name="MainCamera" type="Camera2D" parent="."]
+anchor_mode = 0
+current = true
+script = ExtResource( 3 )
+
+[node name="Navigation2D" type="Navigation2D" parent="."]
+
+[node name="NavigationPolygonInstance" type="NavigationPolygonInstance" parent="Navigation2D"]
+navpoly = SubResource( 1 )
+
+[node name="Walls" type="Node2D" parent="."]
+
+[node name="Sprite" type="Sprite" parent="Walls"]
+modulate = Color( 0, 0, 0, 1 )
+position = Vector2( 70.1894, 101.444 )
+scale = Vector2( 110.654, 78.8705 )
+texture = ExtResource( 4 )
+
+[node name="Sprite3" type="Sprite" parent="Walls"]
+modulate = Color( 0, 0, 0, 1 )
+position = Vector2( 240.763, 98.7949 )
+scale = Vector2( 36.492, 37.5515 )
+texture = ExtResource( 4 )
+
+[node name="Sprite2" type="Sprite" parent="Walls"]
+modulate = Color( 0, 0, 0, 1 )
+position = Vector2( 7.41619, 94.557 )
+scale = Vector2( 15.8325, 150.914 )
+texture = ExtResource( 4 )
+
+[node name="Sprite5" type="Sprite" parent="Walls"]
+modulate = Color( 0, 0, 0, 1 )
+position = Vector2( 63.8142, 183.552 )
+scale = Vector2( 126.51, 23.7784 )
+texture = ExtResource( 4 )
+
+[node name="Sprite6" type="Sprite" parent="Walls"]
+modulate = Color( 0, 0, 0, 1 )
+position = Vector2( 267.001, 184.346 )
+scale = Vector2( 126.51, 23.7784 )
+texture = ExtResource( 4 )
+
+[node name="Sprite16" type="Sprite" parent="Walls"]
+modulate = Color( 0, 0, 0, 1 )
+position = Vector2( 467.014, 85.9268 )
+scale = Vector2( 229.691, 23.7784 )
+texture = ExtResource( 4 )
+
+[node name="Sprite13" type="Sprite" parent="Walls"]
+modulate = Color( 0, 0, 0, 1 )
+position = Vector2( 381.294, 262.128 )
+scale = Vector2( 126.51, 23.7784 )
+texture = ExtResource( 4 )
+
+[node name="Sprite11" type="Sprite" parent="Walls"]
+modulate = Color( 0, 0, 0, 1 )
+position = Vector2( 334.466, 366.103 )
+scale = Vector2( 216.992, 23.7784 )
+texture = ExtResource( 4 )
+
+[node name="Sprite19" type="Sprite" parent="Walls"]
+modulate = Color( 0, 0, 0, 1 )
+position = Vector2( 390.819, 434.361 )
+scale = Vector2( 591.619, 23.7784 )
+texture = ExtResource( 4 )
+
+[node name="Sprite8" type="Sprite" parent="Walls"]
+modulate = Color( 0, 0, 0, 1 )
+position = Vector2( 340.879, 135.577 )
+scale = Vector2( 23.7784, 122.368 )
+texture = ExtResource( 4 )
+
+[node name="Sprite15" type="Sprite" parent="Walls"]
+modulate = Color( 0, 0, 0, 1 )
+position = Vector2( 340.879, 135.577 )
+scale = Vector2( 23.7784, 122.368 )
+texture = ExtResource( 4 )
+
+[node name="Sprite17" type="Sprite" parent="Walls"]
+modulate = Color( 0, 0, 0, 1 )
+position = Vector2( 572.64, 238.361 )
+scale = Vector2( 23.7784, 280.314 )
+texture = ExtResource( 4 )
+
+[node name="Sprite12" type="Sprite" parent="Walls"]
+modulate = Color( 0, 0, 0, 1 )
+position = Vector2( 454.379, 313.366 )
+scale = Vector2( 23.7784, 122.368 )
+texture = ExtResource( 4 )
+
+[node name="Sprite14" type="Sprite" parent="Walls"]
+modulate = Color( 0, 0, 0, 1 )
+position = Vector2( 282.939, 261.775 )
+scale = Vector2( 74.5752, 23.9489 )
+texture = ExtResource( 4 )
+
+[node name="Sprite10" type="Sprite" parent="Walls"]
+modulate = Color( 0, 0, 0, 1 )
+position = Vector2( 214.681, 286.38 )
+scale = Vector2( 23.7784, 181.102 )
+texture = ExtResource( 4 )
+
+[node name="Sprite18" type="Sprite" parent="Walls"]
+modulate = Color( 0, 0, 0, 1 )
+position = Vector2( 105.15, 312.572 )
+scale = Vector2( 23.7784, 239.835 )
+texture = ExtResource( 4 )
+
+[node name="Sprite9" type="Sprite" parent="Walls"]
+modulate = Color( 0, 0, 0, 1 )
+position = Vector2( 673.44, 216.534 )
+scale = Vector2( 23.7784, 427.149 )
+texture = ExtResource( 4 )
+
+[node name="Sprite7" type="Sprite" parent="Walls"]
+modulate = Color( 0, 0, 0, 1 )
+position = Vector2( 336.991, 9.7991 )
+scale = Vector2( 669.69, 17.9514 )
+texture = ExtResource( 4 )
+
+[node name="ActorsContainer" type="Node2D" parent="."]
+script = ExtResource( 5 )
+
+[node name="PlayerCharacter" parent="ActorsContainer" instance=ExtResource( 1 )]
+position = Vector2( 649.717, 408.308 )
+
+[node name="PlayerCharacter2" parent="ActorsContainer" instance=ExtResource( 1 )]
+position = Vector2( 619.751, 361.86 )
+
+[node name="EnemyContainer" type="Node2D" parent="."]
+
+[node name="Enemy" parent="EnemyContainer" instance=ExtResource( 2 )]
+position = Vector2( 165.606, 48.6192 )
