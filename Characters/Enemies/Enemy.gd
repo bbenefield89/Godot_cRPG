@@ -12,10 +12,10 @@ func _ready():
 	hitbox.set_attack_cooldown_duration(stats.current_attack_speed)
 
 
-func _on_HurtBox_area_entered(area):
-	'''
+func _on_HurtBox_area_entered(_area):
+	"""
 	Not too sure what to do with this function right now
-	'''
+	"""
 	pass
 #	stats.set_health(stats.health - area.get_parent().get_node("Stats").damage)
 #	area.trigger_attack_cooldown()
