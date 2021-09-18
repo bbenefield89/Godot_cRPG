@@ -13,8 +13,12 @@ func _ready():
 
 
 func _on_HurtBox_area_entered(area):
-	stats.set_health(stats.health - area.get_parent().get_node("Stats").damage)
-	area.trigger_attack_cooldown()
+	'''
+	Not too sure what to do with this function right now
+	'''
+	pass
+#	stats.set_health(stats.health - area.get_parent().get_node("Stats").damage)
+#	area.trigger_attack_cooldown()
 
 
 func _on_Stats_zero_health():
