@@ -14,10 +14,10 @@ radius = 4.0
 radius = 4.0
 height = 8.0
 
-[sub_resource type="CircleShape2D" id=4]
+[sub_resource type="CircleShape2D" id=3]
 radius = 698.264
 
-[sub_resource type="RectangleShape2D" id=5]
+[sub_resource type="RectangleShape2D" id=4]
 extents = Vector2( 4, 8 )
 
 [node name="Enemy" type="KinematicBody2D"]
@@ -33,21 +33,21 @@ shape = SubResource( 1 )
 
 [node name="HurtBox" type="Area2D" parent="."]
 collision_layer = 4
-collision_mask = 0
+collision_mask = 16
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
 shape = SubResource( 2 )
 
 [node name="HitBox" parent="." instance=ExtResource( 5 )]
-visible = true
 
 [node name="AggroRadius" type="Area2D" parent="."]
+visible = false
 collision_layer = 0
 collision_mask = 8
 script = ExtResource( 4 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AggroRadius"]
-shape = SubResource( 4 )
+shape = SubResource( 3 )
 disabled = true
 
 [node name="AggroRadiusTimer" type="Timer" parent="AggroRadius"]
@@ -56,13 +56,13 @@ disabled = true
 script = ExtResource( 6 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Collider"]
-shape = SubResource( 5 )
+shape = SubResource( 4 )
 
 [node name="Stats" parent="." instance=ExtResource( 3 )]
 base_movement_speed = 25
 
 [connection signal="area_entered" from="HurtBox" to="." method="_on_HurtBox_area_entered"]
-[connection signal="body_entered" from="AggroRadius" to="." method="_on_AggroRadius_body_entered"]
 [connection signal="body_entered" from="AggroRadius" to="AggroRadius" method="_on_AggroRadius_body_entered"]
+[connection signal="body_entered" from="AggroRadius" to="." method="_on_AggroRadius_body_entered"]
 [connection signal="timeout" from="AggroRadius/AggroRadiusTimer" to="AggroRadius" method="_on_AggroRadiusTimer_timeout"]
 [connection signal="zero_health" from="Stats" to="." method="_on_Stats_zero_health"]
