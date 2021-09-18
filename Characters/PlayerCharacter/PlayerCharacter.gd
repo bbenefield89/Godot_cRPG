@@ -6,7 +6,7 @@ var path := PoolVector2Array() setget set_path
 var Navigation2d := Navigation2D.new() setget set_navigation2d
 var MainCamera := Camera2D.new() setget set_main_camera
 var ActorsContainer := Node2D.new() setget set_actors_container
-var targeted_enemy := KinematicBody2D.new() setget set_targeted_enemy
+var current_target = null setget set_current_target
 
 onready var stats := $Stats
 onready var hitbox := $HitBox
@@ -77,12 +77,12 @@ func set_actors_container(value: Node2D) -> void:
 	ActorsContainer = value
 
 
-func set_targeted_enemy(value: KinematicBody2D) -> void:
-	print("Start timer")
-	UpdatePathToEnemyTimer.start(update_path_to_enemy_cd)
-	targeted_enemy = value
+func set_current_target(value) -> void:
+	if value != null:
+		UpdatePathToEnemyTimer.start(update_path_to_enemy_cd)
+	current_target = value
 
 
 func _on_UpdatePathToEnemyTimer_timeout():
-	print("Update Path")
-	handle_lmb_click(targeted_enemy)
+	if current_target != null:
+		handle_lmb_click(current_target)

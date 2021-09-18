@@ -32,6 +32,10 @@ func _input(_event):
 			emit_signal("open_esc_menu")
 		else:
 			actors_selected.clear()
+	elif Input.is_action_just_pressed("stop_actor_actions"):
+		for actor in actors_selected:
+			actor.set_path(PoolVector2Array())
+			actor.set_current_target(null)
 
 
 func handle_key_input_select_actor(num_key_value: int) -> void:
@@ -73,7 +77,7 @@ func path_to_enemy(enemy) -> void:
 
 func set_selected_actors_target(value: KinematicBody2D) -> void:
 	for actor in actors_selected:
-		actor.set_targeted_enemy(value)
+		actor.set_current_target(value)
 
 
 func set_is_selecting_actor(value: bool) -> void:
