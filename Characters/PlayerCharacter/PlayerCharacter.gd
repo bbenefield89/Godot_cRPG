@@ -61,6 +61,21 @@ func _on_Stats_zero_health():
 	queue_free()
 
 
+func _on_UpdatePathToEnemyTimer_timeout():
+	if current_target != null:
+		handle_lmb_click(current_target)
+
+
+func _on_HitBox_area_entered(area):
+	var enemy : KinematicBody2D = area.get_parent()
+	if current_target != null:
+		if enemy.name == current_target.name:
+			set_path(PoolVector2Array())
+			enemy.stats.health -= stats.damage
+			if enemy.stats.health <= 0:
+				current_target = null
+
+
 func set_path(value: PoolVector2Array) -> void:
 	path = value
 
@@ -82,7 +97,3 @@ func set_current_target(value) -> void:
 		UpdatePathToEnemyTimer.start(update_path_to_enemy_cd)
 	current_target = value
 
-
-func _on_UpdatePathToEnemyTimer_timeout():
-	if current_target != null:
-		handle_lmb_click(current_target)
