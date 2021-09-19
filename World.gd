@@ -19,9 +19,8 @@ func _ready():
 		enemy.set_navigation2d(Navigation2d)
 		enemy.set_actors_container(EnemyContainer)
 		collider.connect("lmb_released_on_enemy_collider", ActorsContainer,
-				"path_to_enemy", [enemy])
-		collider.connect("lmb_released_on_enemy_collider", ActorsContainer,
 				"set_selected_actors_target", [enemy])
+
 
 func open_esc_menu():
 	print("Open ESC Menu")

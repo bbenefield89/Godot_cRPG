@@ -8,6 +8,7 @@ var MainCamera := Camera2D.new() setget set_main_camera
 var ActorsContainer := Node2D.new() setget set_actors_container
 var current_target = null setget set_current_target
 
+onready var whoami := name
 onready var stats := $Stats
 onready var hitbox := $HitBox
 onready var UpdatePathToEnemyTimer := $UpdatePathToEnemyTimer
@@ -29,9 +30,16 @@ func _physics_process(delta):
 func handle_lmb_click(event):
 	if not event is KinematicBody2D:
 		current_target = null
+	else:
+		event.stats.connect("zero_health", self, "set_current_target", [null])
+		event.get_node("Collider").connect("lmb_released_on_enemy_collider",
+				self, "handle_lmb_click", [event])
+	create_path_to_destination(event.position)
+
+
+func create_path_to_destination(event_position):
 	var simple_path : PoolVector2Array = Navigation2d.get_simple_path(
-		get_position(),
-		event.position + MainCamera.get_camera_position())
+			get_position(), event_position + MainCamera.position)
 	set_path(simple_path)
 
 
@@ -61,8 +69,8 @@ func _on_Stats_zero_health():
 
 
 func _on_UpdatePathToEnemyTimer_timeout():
-	if current_target != null:
-		handle_lmb_click(current_target)
+	if current_target != null and is_instance_valid(current_target):
+		create_path_to_destination(current_target.position)
 
 
 func _on_HitBox_area_entered(area):
