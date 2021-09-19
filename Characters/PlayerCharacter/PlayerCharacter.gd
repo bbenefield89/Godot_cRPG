@@ -30,6 +30,8 @@ func _physics_process(delta):
 
 
 func handle_lmb_click(event):
+	if not event is KinematicBody2D:
+		current_target = null
 	var simple_path : PoolVector2Array = Navigation2d.get_simple_path(
 		get_position(),
 		event.position + MainCamera.get_camera_position())
