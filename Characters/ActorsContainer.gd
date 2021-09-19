@@ -70,11 +70,6 @@ func is_actor_allowed_to_move(actor: KinematicBody2D) -> bool:
 	return is_actor_selected
 
 
-func path_to_enemy(enemy) -> void:
-	for actor in actors_selected:
-		actor.handle_lmb_click(enemy)
-
-
 func set_selected_actors_target(value: KinematicBody2D) -> void:
 	for actor in actors_selected:
 		actor.set_current_target(value)
