@@ -11,10 +11,7 @@ var current_target = null setget set_current_target
 onready var stats := $Stats
 onready var hitbox := $HitBox
 onready var UpdatePathToEnemyTimer := $UpdatePathToEnemyTimer
-
-func _ready():
-	hitbox.set_attack_cooldown_duration(stats.current_attack_speed)
-
+onready var HitBoxAttackCooldownTimer := $HitBox/AttackCooldownTimer
 
 func _input(event):
 	if (
@@ -74,6 +71,7 @@ func _on_HitBox_area_entered(area):
 		if enemy.name == current_target.name:
 			set_path(PoolVector2Array())
 			enemy.stats.health -= stats.damage
+			hitbox.trigger_attack_cooldown(stats.current_attack_speed)
 			if enemy.stats.health <= 0:
 				current_target = null
 
