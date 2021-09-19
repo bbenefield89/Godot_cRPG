@@ -1,0 +1,15 @@
+extends Area2D
+
+export(float) var aggro_radius_cd_timer := 1.0
+
+onready var AggroRadiusTimer := $AggroRadiusTimer
+
+func _on_AggroRadius_body_entered(body):
+	print(get_parent().name, " detected ", body.name, "!")
+	set_deferred("monitoring", false)
+	AggroRadiusTimer.start(aggro_radius_cd_timer)
+
+
+func _on_AggroRadiusTimer_timeout():
+	print(get_parent().name, " now detecting enemies!")
+	set_deferred("monitoring", true)
