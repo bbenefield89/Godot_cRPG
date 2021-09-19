@@ -10,15 +10,13 @@ func _ready():
 	ActorsContainer.connect("open_esc_menu", self, "open_esc_menu")
 
 	for actor in ActorsContainer.get_children():
-		actor.set_navigation2d(Navigation2d)
-		actor.set_main_camera(MainCamera)
-		actor.set_actors_container(ActorsContainer)
+		actor.Navigation2d = Navigation2d
+		actor.MainCamera = MainCamera
 
 	for enemy in EnemyContainer.get_children():
-		var collider = enemy.get_node("Collider")
-		enemy.set_navigation2d(Navigation2d)
-		enemy.set_actors_container(EnemyContainer)
-		collider.connect("lmb_released_on_enemy_collider", ActorsContainer,
+		var collider = enemy.get_node("SelectBox")
+		enemy.Navigation2d = Navigation2d
+		collider.connect("lmb_up", ActorsContainer,
 				"set_selected_actors_target", [enemy])
 
 

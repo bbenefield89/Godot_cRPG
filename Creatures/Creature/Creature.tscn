@@ -1,0 +1,27 @@
+[gd_scene format=2]
+
+[node name="Creature" type="KinematicBody2D"]
+
+[node name="Sprite" type="Sprite" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+
+[node name="SelectBox" type="Area2D" parent="."]
+position = Vector2( 0, 2 )
+
+[node name="SelectBoxShape" type="CollisionShape2D" parent="SelectBox"]
+position = Vector2( 0, -2 )
+
+[node name="HitBox" type="Area2D" parent="."]
+
+[node name="HitBoxShape" type="CollisionShape2D" parent="HitBox"]
+
+[node name="AttackCooldownTimer" type="Timer" parent="HitBox"]
+
+[node name="HurtBox" type="Area2D" parent="."]
+
+[node name="HurtBoxShape" type="CollisionShape2D" parent="HurtBox"]
+
+[node name="Stats" type="Node2D" parent="."]
+
+[node name="UpdatePathToEnemyTimer" type="Timer" parent="."]

@@ -9,12 +9,12 @@ onready var actors_in_party = get_children()
 
 func _ready():
 	for actor in actors_in_party:
-		var actorCollider = actor.get_node("Collider")
-		actorCollider.connect("lmb_released_on_player_collider", self,
+		var actorCollider = actor.get_node("SelectBox")
+		actorCollider.connect("lmb_up", self,
 				"select_only_this_actor", [actor])
-		actorCollider.connect("lmb_released_on_player_collider_shift", self,
+		actorCollider.connect("lmb_up_shift", self,
 				"select_actor", [actor])
-		actorCollider.connect("lmb_clicked_on_player_collider", self,
+		actorCollider.connect("lmb_down", self,
 				"set_is_selecting_actor", [true])
 		actorCollider.connect("on_mouse_exit", self, "set_is_selecting_actor",
 				[false])
@@ -34,7 +34,7 @@ func _input(_event):
 			actors_selected.clear()
 	elif Input.is_action_just_pressed("stop_actor_actions"):
 		for actor in actors_selected:
-			actor.set_path(PoolVector2Array())
+			actor.path = PoolVector2Array()
 			actor.set_current_target(null)
 
 

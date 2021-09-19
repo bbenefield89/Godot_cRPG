@@ -1,7 +1,7 @@
 [gd_scene load_steps=8 format=2]
 
-[ext_resource path="res://Characters/PlayerCharacter/PlayerCharacter.tscn" type="PackedScene" id=1]
-[ext_resource path="res://Characters/Enemies/Enemy.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Creatures/Actor/Actor.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Creatures/Npc/Enemies/Enemy.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Cameras/Camera2D.gd" type="Script" id=3]
 [ext_resource path="res://1px_sprite.png" type="Texture" id=4]
 [ext_resource path="res://Characters/ActorsContainer.gd" type="Script" id=5]
@@ -13,6 +13,7 @@ polygons = [ PoolIntArray( 0, 1, 2, 3 ), PoolIntArray( 4, 5, 6, 7 ), PoolIntArra
 outlines = [ PoolVector2Array( 14.2802, 18.2681, 661.94, 19.0618, 663.527, 420.674, 115.874, 424.643, 116.668, 195.263, 127.779, 193.676, 127.779, 172.246, 13.4865, 170.659, 13.4865, 139.704, 124.605, 141.292, 125.398, 61.9217, 15.0739, 61.9217 ), PoolVector2Array( 222.23, 80.9705, 257.946, 82.5579, 258.74, 114.306, 220.642, 116.687 ), PoolVector2Array( 203.181, 172.246, 328.586, 172.246, 327.792, 70.6524, 583.363, 71.4461, 584.951, 377.021, 560.346, 378.608, 560.346, 100.019, 353.19, 99.2256, 353.19, 199.232, 224.611, 196.851, 226.992, 351.622, 440.497, 352.416, 442.085, 272.252, 244.453, 272.252, 247.628, 249.235, 466.689, 249.235, 467.483, 377.021, 201.593, 378.608 ) ]
 
 [node name="World" type="Node2D"]
+position = Vector2( 11.3265, -50.9692 )
 script = ExtResource( 7 )
 
 [node name="MainCamera" type="Camera2D" parent="."]
@@ -138,13 +139,10 @@ texture = ExtResource( 4 )
 [node name="ActorsContainer" type="Node2D" parent="."]
 script = ExtResource( 5 )
 
-[node name="PlayerCharacter" parent="ActorsContainer" instance=ExtResource( 1 )]
-position = Vector2( 200.717, 55.308 )
-
-[node name="PlayerCharacter2" parent="ActorsContainer" instance=ExtResource( 1 )]
-position = Vector2( 147.751, 78.86 )
+[node name="Actor" parent="ActorsContainer" instance=ExtResource( 1 )]
+position = Vector2( 287.586, 139.862 )
 
 [node name="EnemyContainer" type="Node2D" parent="."]
 
 [node name="Enemy" parent="EnemyContainer" instance=ExtResource( 2 )]
-position = Vector2( 170.606, 52.6192 )
+position = Vector2( 618.602, 357.958 )
