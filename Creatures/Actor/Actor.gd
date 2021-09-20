@@ -9,7 +9,8 @@ func _input(event):
 			event is InputEventMouseButton and
 			ContainerNode.is_actor_allowed_to_move(self)):
 		current_target = null
-		create_path_to_destination(event.position, MainCamera.position)
+		create_path_to_destination(event.position * MainCamera.zoom,
+				MainCamera.position)
 
 
 func _on_Stats_zero_health():
