@@ -6,6 +6,8 @@ export(int) var base_movement_speed := 100
 export(float) var base_attack_speed := 2.0
 export(float) var base_attack_distance := 1.0
 
+var weapon := { "attack_type": "standard" }
+
 onready var health := max_health setget set_health
 onready var current_movement_speed := base_movement_speed
 onready var current_attack_speed := base_attack_speed

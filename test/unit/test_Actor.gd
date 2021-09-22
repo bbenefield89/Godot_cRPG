@@ -22,14 +22,3 @@ func test__on_UpdatePathToEnemyTimer_timeout():
 	var actor = partial_double(Actor).new()
 	actor._on_UpdatePathToEnemyTimer_timeout()
 	assert_called(actor, "update_path_to_enemy")
-
-
-func test__on_HitBox_area_entered():
-	var actor = partial_double(Actor).new()
-	var area = Area2d.new()
-	actor.current_target = Enemy.new()
-	actor.Stats = StatsMock.new()
-	actor.HitBox = double(HitBox).new()
-	actor._on_HitBox_area_entered(area)
-	assert_true(actor.path == PoolVector2Array())
-	assert_called(actor.HitBox, "trigger_attack_cooldown")

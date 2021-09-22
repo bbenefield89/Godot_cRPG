@@ -139,7 +139,10 @@ texture = ExtResource( 4 )
 script = ExtResource( 5 )
 
 [node name="Actor" parent="ActorsContainer" instance=ExtResource( 1 )]
-position = Vector2( 179, 216 )
+position = Vector2( 509, 399 )
+
+[node name="Actor2" parent="ActorsContainer" instance=ExtResource( 1 )]
+position = Vector2( 509, 399 )
 
 [node name="EnemyContainer" type="Node2D" parent="."]
 

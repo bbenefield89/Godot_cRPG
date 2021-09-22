@@ -15,6 +15,9 @@ class StatsMock:
 	var damage = 1
 	var current_attack_speed = 1
 	var current_movement_speed = 1
+	var weapon = { "attack_type": "standard" }
+	func _init(a = "standard"):
+		weapon.attack_type = a
 
 
 class UpdatePathToEnemyTimer extends Timer:
@@ -27,8 +30,14 @@ class Navigation2d extends Navigation2D:
 
 
 class Area2d extends Area2D:
+	var parent = Enemy.new() setget , get_parent
 	func get_parent():
-		return Enemy.new()
+		return parent
+
+
+class TimerMock extends Timer:
+	pass
+
 
 func test_create_path_to_destination():
 	var creature = Creature.new()
@@ -60,6 +69,50 @@ func test_update_path_to_enemy():
 	assert_called(creature, "create_path_to_destination")
 
 
+###
+# Cant figure out how to test a method with a yield
+###
+#func test_attack():
+#	var creature = partial_double(Creature).new()
+#	var area = Area2d.new()
+#	var timer_mock = TimerMock
+#	creature.current_target = Enemy.new()
+#	stub(creature, "handle_weapon_attack_type")
+#	stub(creature, "create_attack_windup_timer").to_return(timer_mock.new())
+#	creature.attack(area)
+#	yield_for(1)
+#	assert_true(creature.path == PoolVector2Array())
+#	assert_called(creature, "handle_weapon_attack_type")
+
+
+func test_handle_weapon_attack_type():
+	var creature = partial_double(Creature).new()
+	creature.HitBox = double(HitBox).new()
+	stub(creature.HitBox, "trigger_attack_cooldown")
+	creature.Stats = StatsMock.new()
+	stub(creature, "attack_targets")
+	var area = Area2d.new()
+	creature.handle_weapon_attack_type(area)
+	assert_called(creature, "attack_targets", [[area]])
+	assert_called(creature.HitBox, "trigger_attack_cooldown")
+	
+	creature.HitBox = partial_double(HitBox).new()
+	creature.Stats = StatsMock.new("cleave")
+	stub(creature.HitBox, "trigger_attack_cooldown")
+	creature.handle_weapon_attack_type(area)
+	assert_called(creature, "attack_targets", [creature.HitBox.enemies_in_hitbox])
+	assert_called(creature.HitBox, "trigger_attack_cooldown")
+
+
+func test_attack_targets():
+	var creature = partial_double(Creature).new()
+	creature.Stats = StatsMock.new()
+	var targets = [Area2d.new()]
+	creature.attack_targets(targets)
+	for target in targets:
+		assert_true(target.get_parent().Stats.health < 1)
+
+
 func test_set_current_target():
 	var creature = partial_double(Creature).new()
 	var enemy = Enemy.new()
@@ -67,14 +120,3 @@ func test_set_current_target():
 	stub(creature, "remove_existing_connection").to_do_nothing()
 	creature.current_target = enemy
 	assert_true(creature.current_target == enemy)
-
-
-func test__on_HitBox_area_entered():
-	var creature = partial_double(Creature).new()
-	var area = Area2d.new()
-	creature.current_target = Enemy.new()
-	creature.Stats = StatsMock.new()
-	creature.HitBox = double(HitBox).new()
-	creature._on_HitBox_area_entered(area)
-	assert_true(creature.path == PoolVector2Array())
-	assert_called(creature.HitBox, "trigger_attack_cooldown")

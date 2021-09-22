@@ -17,9 +17,5 @@ func _input(event):
 				MainCamera.position)
 
 
-func _on_Stats_zero_health():
-	queue_free()
-
-
 func _on_UpdatePathToEnemyTimer_timeout():
 	update_path_to_enemy()
