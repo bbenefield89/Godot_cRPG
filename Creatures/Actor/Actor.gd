@@ -2,7 +2,11 @@ extends "res://Creatures/Creature/Creature.gd"
 
 var MainCamera := Camera2D.new()
 
-onready var HitBoxAttackCooldownTimer := $HitBox/AttackCooldownTimer
+var HitBoxAttackCooldownTimer = null
+
+func _ready():
+	HitBoxAttackCooldownTimer = $HitBox/AttackCooldownTimer
+
 
 func _ready():
 	HitBox.connect("enemy_entered_hitbox", self, "attack")

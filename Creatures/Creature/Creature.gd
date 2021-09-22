@@ -4,13 +4,18 @@ export(float) var update_path_to_enemy_cd = 0.5
 
 var path := PoolVector2Array()
 var Navigation2d := Navigation2D.new()
-var current_target = null setget set_current_target
+var current_target = null
+var Stats = null
+var HitBox = null
 
 onready var whoami := name
-onready var Stats := $Stats
-onready var HitBox := $HitBox
 onready var ContainerNode := get_parent()
 onready var UpdatePathToEnemyTimer := $UpdatePathToEnemyTimer
+
+func _ready():
+	Stats = $Stats
+	HitBox = $HitBox
+
 
 func _physics_process(delta):
 	move_to_destination(delta)
@@ -55,3 +60,12 @@ func set_current_target(value: KinematicBody2D = null) -> void:
 	else:
 		remove_existing_connection(current_target.Stats)
 	current_target = value
+
+
+func _on_HitBox_area_entered(area):
+	var enemy : KinematicBody2D = area.get_parent()
+	if (current_target != null and is_instance_valid(current_target) and
+				enemy.name == current_target.name):
+			path = PoolVector2Array()
+			enemy.Stats.health -= Stats.damage
+			HitBox.trigger_attack_cooldown(Stats.current_attack_speed)
