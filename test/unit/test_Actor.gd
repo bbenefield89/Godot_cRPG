@@ -1,9 +1,22 @@
 extends "res://addons/gut/test.gd"
 
-class Enemy extends KinematicBody2D:
-	pass
-
 var Actor = load("res://Creatures/Actor/Actor.gd")
+var HitBox = load("res://Creatures/Actor/HitBox.gd")
+
+class StatsMock:
+	var health = 1
+	var damage = 1
+	var current_attack_speed = 1
+
+
+class Enemy extends KinematicBody2D:
+	var Stats = StatsMock.new()
+
+
+class Area2d extends Area2D:
+	func get_parent():
+		return Enemy.new()
+
 
 func test__on_UpdatePathToEnemyTimer_timeout():
 	var actor = partial_double(Actor).new()
@@ -11,7 +24,12 @@ func test__on_UpdatePathToEnemyTimer_timeout():
 	assert_called(actor, "update_path_to_enemy")
 
 
-#func test__on_HitBox_area_entered():
-#	var actor = partial_double(Actor).new()
-#	actor._on_HitBox_area_entered(Area2D.new())
-	
+func test__on_HitBox_area_entered():
+	var actor = partial_double(Actor).new()
+	var area = Area2d.new()
+	actor.current_target = Enemy.new()
+	actor.Stats = StatsMock.new()
+	actor.HitBox = double(HitBox).new()
+	actor._on_HitBox_area_entered(area)
+	assert_true(actor.path == PoolVector2Array())
+	assert_called(actor.HitBox, "trigger_attack_cooldown")

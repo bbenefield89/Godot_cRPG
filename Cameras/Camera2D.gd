@@ -12,7 +12,7 @@ func handle_camera_movement(delta: float) -> void:
 	position.y += (Input.get_action_strength("camera_down") - Input.get_action_strength("camera_up")) * speed * delta
 
 
-func handle_camera_zoom(delta: float) -> void:
+func handle_camera_zoom(_delta: float) -> void:
 	if Input.is_action_just_released("scroll_wheel_up"):
 		if zoom > Vector2(0.5, 0.5):
 			zoom -= Vector2(0.01, 0.01)
