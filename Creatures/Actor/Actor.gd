@@ -8,10 +8,6 @@ func _ready():
 	HitBoxAttackCooldownTimer = $HitBox/AttackCooldownTimer
 
 
-func _ready():
-	HitBox.connect("enemy_entered_hitbox", self, "attack")
-
-
 func _input(event):
 	if (Input.is_action_just_released("pc_move") and
 			event is InputEventMouseButton and

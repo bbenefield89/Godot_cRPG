@@ -74,8 +74,8 @@ script = ExtResource( 3 )
 
 [connection signal="mouse_exited" from="SelectBox" to="SelectBox" method="_on_SelectBox_mouse_exited"]
 [connection signal="timeout" from="HitBox/AttackCooldownTimer" to="HitBox" method="_on_AttackCooldownTimer_timeout"]
-[connection signal="body_entered" from="AggroRadius" to="AggroRadius" method="_on_AggroRadius_body_entered"]
 [connection signal="body_entered" from="AggroRadius" to="." method="_on_AggroRadius_body_entered"]
+[connection signal="body_entered" from="AggroRadius" to="AggroRadius" method="_on_AggroRadius_body_entered"]
 [connection signal="timeout" from="AggroRadius/AggroRadiusTimer" to="AggroRadius" method="_on_AggroRadiusTimer_timeout"]
 [connection signal="zero_health" from="Stats" to="." method="_on_Stats_zero_health"]
 [connection signal="timeout" from="UpdatePathToEnemyTimer" to="." method="_on_UpdatePathToEnemyTimer_timeout"]
