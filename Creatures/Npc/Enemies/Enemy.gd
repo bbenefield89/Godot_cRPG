@@ -1,9 +1,5 @@
 extends "res://Creatures/Creature/Creature.gd"
 
-func _on_Stats_zero_health():
-	queue_free()
-
-
 func _on_AggroRadius_body_entered(body):
 	if not (current_target and is_instance_valid(current_target)):
 		set_current_target(body)

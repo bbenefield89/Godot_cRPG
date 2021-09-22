@@ -17,31 +17,5 @@ func _input(event):
 				MainCamera.position)
 
 
-func attack(area: Area2D):
-	var enemy : KinematicBody2D = area.get_parent()
-	if (current_target != null and is_instance_valid(current_target)
-			and enemy.name == current_target.name):
-		path = PoolVector2Array()
-		handle_weapon_attack_type(area)
-
-
-func handle_weapon_attack_type(area: Area2D):
-	if Stats.weapon.attack_type == "cleave":
-		for hitbox in HitBox.enemies_in_hitbox:
-			attack_targets(HitBox.enemies_in_hitbox)
-	else:
-		attack_targets([area])
-	HitBox.trigger_attack_cooldown(Stats.current_attack_speed)
-
-
-func attack_targets(targets: Array) -> void:
-	for target in targets:
-		target.get_parent().Stats.health -= Stats.damage
-
-
-func _on_Stats_zero_health():
-	queue_free()
-
-
 func _on_UpdatePathToEnemyTimer_timeout():
 	update_path_to_enemy()
