@@ -2,7 +2,11 @@ extends "res://Creatures/Creature/Creature.gd"
 
 var MainCamera := Camera2D.new()
 
-onready var HitBoxAttackCooldownTimer := $HitBox/AttackCooldownTimer
+var HitBoxAttackCooldownTimer = null
+
+func _ready():
+	HitBoxAttackCooldownTimer = $HitBox/AttackCooldownTimer
+
 
 func _input(event):
 	if (Input.is_action_just_released("pc_move") and
@@ -19,12 +23,3 @@ func _on_Stats_zero_health():
 
 func _on_UpdatePathToEnemyTimer_timeout():
 	update_path_to_enemy()
-
-
-func _on_HitBox_area_entered(area):
-	var enemy : KinematicBody2D = area.get_parent()
-	if (current_target != null and is_instance_valid(current_target) and
-				enemy.name == current_target.name):
-			path = PoolVector2Array()
-			enemy.Stats.health -= Stats.damage
-			HitBox.trigger_attack_cooldown(Stats.current_attack_speed)
