@@ -1,12 +1,11 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://UI/SelectActorButton.gd" type="Script" id=1]
+[ext_resource path="res://UI/PartyContainerUI.gd" type="Script" id=2]
 
 [sub_resource type="StyleBoxFlat" id=1]
-bg_color = Color( 0.0435181, 0.168392, 0.359375, 1 )
-border_width_left = 3
-border_width_top = 3
-border_width_right = 3
-border_width_bottom = 3
-border_color = Color( 0.784314, 0.780392, 0.780392, 1 )
+bg_color = Color( 0.0431373, 0.168627, 0.360784, 1 )
+border_color = Color( 0.580392, 0.580392, 0.580392, 1 )
 
 [node name="BottomUI" type="MarginContainer"]
 anchor_top = 1.0
@@ -22,8 +21,9 @@ margin_right = 1024.0
 margin_bottom = 118.0
 
 [node name="PartyContainer" type="HBoxContainer" parent="HBoxContainer"]
-margin_right = 75.0
+margin_right = 154.0
 margin_bottom = 118.0
+script = ExtResource( 2 )
 
 [node name="MarginContainer" type="MarginContainer" parent="HBoxContainer/PartyContainer"]
 margin_right = 75.0
@@ -36,24 +36,49 @@ margin_right = 75.0
 margin_bottom = 118.0
 custom_styles/panel = SubResource( 1 )
 
-[node name="NinePatchRect" type="NinePatchRect" parent="HBoxContainer/PartyContainer/MarginContainer"]
+[node name="SelectActorButton" type="Button" parent="HBoxContainer/PartyContainer/MarginContainer"]
 margin_right = 75.0
 margin_bottom = 118.0
+mouse_default_cursor_shape = 2
+text = "Actor"
+flat = true
+script = ExtResource( 1 )
 
-[node name="Label" type="Label" parent="HBoxContainer/PartyContainer/MarginContainer"]
-margin_top = 52.0
+[node name="MarginContainer2" type="MarginContainer" parent="HBoxContainer/PartyContainer"]
+margin_left = 79.0
+margin_right = 154.0
+margin_bottom = 118.0
+rect_min_size = Vector2( 75, 0 )
+mouse_default_cursor_shape = 2
+
+[node name="Panel" type="Panel" parent="HBoxContainer/PartyContainer/MarginContainer2"]
 margin_right = 75.0
-margin_bottom = 66.0
-text = "Label"
-align = 1
-valign = 1
+margin_bottom = 118.0
+custom_styles/panel = SubResource( 1 )
+
+[node name="SelectActorButton" type="Button" parent="HBoxContainer/PartyContainer/MarginContainer2"]
+margin_right = 75.0
+margin_bottom = 118.0
+mouse_default_cursor_shape = 2
+text = "Actor"
+flat = true
+script = ExtResource( 1 )
 
 [node name="QuickMenuContainer" type="HBoxContainer" parent="HBoxContainer"]
-margin_left = 79.0
-margin_right = 79.0
+margin_left = 158.0
+margin_right = 158.0
 margin_bottom = 118.0
 
 [node name="ChatBoxContainer" type="HBoxContainer" parent="HBoxContainer"]
-margin_left = 83.0
-margin_right = 83.0
+margin_left = 162.0
+margin_right = 162.0
 margin_bottom = 118.0
+
+[connection signal="button_down" from="HBoxContainer/PartyContainer/MarginContainer/SelectActorButton" to="HBoxContainer/PartyContainer" method="_on_SelectActorButton_button_down"]
+[connection signal="button_up" from="HBoxContainer/PartyContainer/MarginContainer/SelectActorButton" to="HBoxContainer/PartyContainer/MarginContainer/SelectActorButton" method="_on_SelectActorButton_button_up"]
+[connection signal="party_ui_actor_selected" from="HBoxContainer/PartyContainer/MarginContainer/SelectActorButton" to="HBoxContainer/PartyContainer" method="_on_SelectActorButton_party_ui_actor_selected"]
+[connection signal="party_ui_actor_selected_shift" from="HBoxContainer/PartyContainer/MarginContainer/SelectActorButton" to="HBoxContainer/PartyContainer" method="_on_SelectActorButton_party_ui_actor_selected_shift"]
+[connection signal="button_down" from="HBoxContainer/PartyContainer/MarginContainer2/SelectActorButton" to="HBoxContainer/PartyContainer" method="_on_SelectActorButton_button_down"]
+[connection signal="button_up" from="HBoxContainer/PartyContainer/MarginContainer2/SelectActorButton" to="HBoxContainer/PartyContainer/MarginContainer2/SelectActorButton" method="_on_SelectActorButton_button_up"]
+[connection signal="party_ui_actor_selected" from="HBoxContainer/PartyContainer/MarginContainer2/SelectActorButton" to="HBoxContainer/PartyContainer" method="_on_SelectActorButton_party_ui_actor_selected"]
+[connection signal="party_ui_actor_selected_shift" from="HBoxContainer/PartyContainer/MarginContainer2/SelectActorButton" to="HBoxContainer/PartyContainer" method="_on_SelectActorButton_party_ui_actor_selected_shift"]
