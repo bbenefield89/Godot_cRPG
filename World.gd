@@ -1,5 +1,10 @@
 extends Node2D
 
+var ActorScene := preload("res://Creatures/Actor/Actor.tscn")
+var ActorsPortraitScene := preload("res://UI/PartyMemberPortrait.tscn")
+var DataMapper := preload("res://saves/DataMapper.gd").new()
+var save_data := {}
+
 onready var ActorsContainer := $ActorsContainer
 onready var EnemyContainer := $EnemyContainer
 onready var Navigation2d := $Navigation2D
@@ -7,17 +12,68 @@ onready var MainCamera := $MainCamera
 onready var PartyUI := $UILayer/BottomUI/HBoxContainer/PartyContainer
 
 func _ready():
+	load_save("quick_save") # Only run on ready for dev purposes
 	connect_ActorsContainers()
 	connect_PartyUI()
 	connect_Actors()
 	connect_Enemies()
 
 
-func open_esc_menu(): ###
+func _input(event):
+	if event.is_action_pressed("quick_save"):
+		save_game("quick_save")
+		print("Quick Save Complete")
+
+
+func save_game(file_name: String) -> void:
+	var save_file := File.new()
+	# warning-ignore:return_value_discarded
+	save_file.open("res://saves/%s.json" % file_name, File.WRITE)
+	save_data.actors.actors_in_party.clear()
+	for actor in ActorsContainer.actors_in_party:
+		save_data.actors.actors_in_party.append(DataMapper.map_actor_to_dict(actor))
+	save_file.store_string(to_json(save_data))
+	save_file.close()
+
+
+func load_save(file_name: String) -> void:
+	var save_file := File.new()
+	if save_file.open("res://saves/%s.json" % file_name, File.READ) == OK:
+		var save_file_json = JSON.parse(save_file.get_as_text())
+		if save_file_json.error == OK:
+			save_data = save_file_json.result
+			handle_save_data()
+	else:
+		print('Save "%s" not found' % file_name) # Need to handle this error appropriately in the future
+	save_file.close()
+
+
+func handle_save_data() -> void:
+	load_actors()
+
+
+func load_actors() -> void:
+	var actors_in_party = []
+	var actors_portraits = []
+	for actor in save_data.actors.actors_in_party:
+		var actor_tscn = ActorScene.instance()
+		actors_in_party.append(actor_tscn)
+		ActorsContainer.add_child(actor_tscn)
+		DataMapper.map_dict_to_actor(actor, actor_tscn)
+		
+		var actors_portrait = ActorsPortraitScene.instance()
+		actors_portraits.append(actors_portrait)
+		actors_portrait.name = actor.name
+		PartyUI.add_child(actors_portrait)
+	ActorsContainer.actors_in_party = actors_in_party
+	PartyUI.actors_portraits = actors_portraits
+
+
+func open_esc_menu() -> void: ###
 	print("Open ESC Menu") # Placeholder until we handle the ESC Menu UI
 
 
-func connect_ActorsContainers() -> void: ###
+func connect_ActorsContainers() -> void:
 	# warning-ignore:return_value_discarded
 	ActorsContainer.connect("open_esc_menu", self, "open_esc_menu")
 	# warning-ignore:return_value_discarded
@@ -25,7 +81,7 @@ func connect_ActorsContainers() -> void: ###
 			"alter_actors_portraits")
 
 
-func connect_PartyUI() -> void: ###
+func connect_PartyUI() -> void:
 	# warning-ignore:return_value_discarded
 	PartyUI.connect("party_ui_selecting_actor", ActorsContainer,
 			"set_is_selecting_actor", [true])
@@ -40,13 +96,13 @@ func connect_PartyUI() -> void: ###
 			"select_actor_by_idx")
 	
 
-func connect_Actors() -> void: ###
+func connect_Actors() -> void:
 	for actor in ActorsContainer.get_children():
 		actor.Navigation2d = Navigation2d
 		actor.MainCamera = MainCamera
 
 
-func connect_Enemies() -> void: ###
+func connect_Enemies() -> void:
 	for enemy in EnemyContainer.get_children():
 		var SelectBox = enemy.get_node("SelectBox")
 		enemy.Navigation2d = Navigation2d

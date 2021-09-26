@@ -1,6 +1,5 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=8 format=2]
 
-[ext_resource path="res://Creatures/Actor/Actor.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Creatures/Npc/Enemies/Enemy.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Cameras/Camera2D.gd" type="Script" id=3]
 [ext_resource path="res://1px_sprite.png" type="Texture" id=4]
@@ -142,12 +141,6 @@ texture = ExtResource( 4 )
 
 [node name="ActorsContainer" type="Node2D" parent="."]
 script = ExtResource( 5 )
-
-[node name="Actor" parent="ActorsContainer" instance=ExtResource( 1 )]
-position = Vector2( 509, 399 )
-
-[node name="Actor2" parent="ActorsContainer" instance=ExtResource( 1 )]
-position = Vector2( 509, 399 )
 
 [node name="EnemyContainer" type="Node2D" parent="."]
 

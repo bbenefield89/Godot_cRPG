@@ -41,7 +41,7 @@ func _input(_event):
 
 
 func handle_key_input_select_actor(num_key_value: int) -> void: ###
-	if get_child_count() > num_key_value:
+	if actors_in_party.size() > num_key_value:
 		if Input.is_action_pressed("shift"):
 			select_actor(get_child(num_key_value))
 		else:
