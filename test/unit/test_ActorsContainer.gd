@@ -10,7 +10,6 @@ func test_select_only_this_actor():
 	actors_container.select_only_this_actor(KinematicBody2D.new())
 	assert_called(actors_container, "deselect_all_actors")
 	assert_called(actors_container, "append_selected_actor")
-	assert_signal_emitted(actors_container, "show_actor_bar")
 
 
 func test_select_only_this_actor_by_idx():
@@ -40,7 +39,7 @@ func test_select_actor_by_idx():
 			[actors_container.actors_in_party[0]])
 	
 
-func test_append_selected_actor():
+func test_append_selected_actor_show_actor_bar():
 	var actors_container = partial_double(ActorsContainer).new()
 	watch_signals(actors_container)
 	var actor = KinematicBody2D.new()
@@ -53,6 +52,26 @@ func test_append_selected_actor():
 		"border_width": 3
 	}
 	assert_eq(actors_container.actors_selected.size(), 1)
+	assert_signal_emitted(actors_container, "show_actor_bar")
+	assert_signal_emitted_with_parameters(actors_container,
+			"alter_actors_portraits", [actors_idxs, styles])
+
+
+func test_append_selected_actor_conceal_actor_bar():
+	var actors_container = partial_double(ActorsContainer).new()
+	watch_signals(actors_container)
+	var actor = KinematicBody2D.new()
+	actors_container.actors_selected = [actor]
+	actors_container.actors_in_party = [actor, actor]
+	actors_container.append_selected_actor(actor)
+	var actors_idxs = [0, 0]
+	var styles = {
+		"background_color": "#0b2b5c",
+		"border_color": "#949494",
+		"border_width": 3
+	}
+	assert_eq(actors_container.actors_selected.size(), 2)
+	assert_signal_emitted(actors_container, "conceal_actor_bar")
 	assert_signal_emitted_with_parameters(actors_container,
 			"alter_actors_portraits", [actors_idxs, styles])
 

@@ -53,7 +53,6 @@ func handle_key_input_select_actor(num_key_value: int) -> void: ### How do you t
 func select_only_this_actor(actor: KinematicBody2D) -> void:
 	deselect_all_actors()
 	append_selected_actor(actor)
-	emit_signal("show_actor_bar")
 
 
 func select_only_this_actor_by_idx(actor_index: int) -> void:
@@ -76,6 +75,10 @@ func select_actor_by_idx(actor_idx: int) -> void:
 
 func append_selected_actor(actor: KinematicBody2D) -> void:
 	actors_selected.append(actor)
+	if actors_selected.size() > 1:
+		emit_signal("conceal_actor_bar")
+	else:
+		emit_signal("show_actor_bar")
 	var styles = {
 		"background_color": "#0b2b5c",
 		"border_color": "#949494",
