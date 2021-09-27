@@ -4,11 +4,13 @@ var ActorsContainer = load("res://Characters/ActorsContainer.gd")
 
 func test_select_only_this_actor():
 	var actors_container = partial_double(ActorsContainer).new()
+	watch_signals(actors_container)
 	stub(actors_container, "deselect_all_actors").to_do_nothing()
 	stub(actors_container, "append_selected_actor").to_do_nothing()
 	actors_container.select_only_this_actor(KinematicBody2D.new())
 	assert_called(actors_container, "deselect_all_actors")
 	assert_called(actors_container, "append_selected_actor")
+	assert_signal_emitted(actors_container, "show_actor_bar")
 
 
 func test_select_only_this_actor_by_idx():
@@ -63,3 +65,4 @@ func test_deselect_all_actors():
 	assert_eq(actors_container.actors_selected.size(), 0)
 	assert_signal_emitted_with_parameters(actors_container,
 			"alter_actors_portraits", [[], { "background_color": "#0b2b5c" }])
+	assert_signal_emitted(actors_container, "conceal_actor_bar")

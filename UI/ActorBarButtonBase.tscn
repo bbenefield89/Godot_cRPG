@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://UI/ActorBarButtonBase.gd" type="Script" id=1]
+
+[node name="ActorBarButtonBase" type="Button"]
+margin_right = 71.0
+margin_bottom = 40.0
+mouse_default_cursor_shape = 2
+text = "Weapons"
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}

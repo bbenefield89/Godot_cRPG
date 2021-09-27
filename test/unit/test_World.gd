@@ -3,8 +3,11 @@ extends "res://addons/gut/test.gd"
 var World = load("res://World.tscn")
 var DataMapper = load("res://saves/DataMapper.gd")
 
-class FileMock extends File:
-	pass
+class ButtonMock extends Button:
+	# warning-ignore:unused_signal
+	signal party_ui_actor_selected
+	# warning-ignore:unused_signal
+	signal party_ui_actor_selected_shift
 
 #func test_open_esc_menu():
 #	var world = partial_double(World).new()
@@ -82,3 +85,24 @@ func test_connect_Enemies():
 		assert_true(enemy.Navigation2d is Navigation2D)
 		assert_connected(enemy.get_node("SelectBox"), world.ActorsContainer,
 				"lmb_up")
+
+
+func test_connect_SelectActorButton():
+	var world = partial_double(World).instance()
+	add_child_autofree(world)
+	var button = ButtonMock.new()
+	world.connect_SelectActorButton(button)
+	assert_connected(button, world.PartyUI, "button_down")
+	assert_connected(button, world.PartyUI, "party_ui_actor_selected")
+	assert_connected(button, world.PartyUI, "party_ui_actor_selected_shift")
+
+
+func test_connect_ActorBarButtons():
+	var world = partial_double(World).instance()
+	add_child_autofree(world)
+	world.connect_ActorBarButtons()
+	for ButtonContainer in world.ActorBar.get_children():
+		if ButtonContainer.name != "SpellsMargin":
+			for button in ButtonContainer.get_children():
+				assert_connected(button, world.ActorsContainer, "button_up")
+				assert_connected(button, world.ActorsContainer, "button_down")

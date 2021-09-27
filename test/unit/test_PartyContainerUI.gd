@@ -59,3 +59,20 @@ func test__on_SelectActorButton_party_ui_actor_selected_not_emitted():
 	partyContainerUI._on_SelectActorButton_party_ui_actor_selected(button)
 	assert_signal_emitted(partyContainerUI, "party_ui_not_selecting_actor")
 	assert_signal_not_emitted(partyContainerUI, "party_ui_actor_selected")
+
+
+func test__on_SelectActorButton_party_ui_actor_selected_shift():
+	var partyContainerUI = partial_double(PartyContainerUI).new()
+	watch_signals(partyContainerUI)
+	partyContainerUI.actors_portraits = [MarginContainerMock.new(Button.new())]
+	var button = partyContainerUI.actors_portraits[0].get_node("Button")
+	partyContainerUI._on_SelectActorButton_party_ui_actor_selected_shift(button)
+	assert_signal_emitted(partyContainerUI, "party_ui_not_selecting_actor")
+	assert_signal_emitted(partyContainerUI, "party_ui_actor_selected_shift", [0])
+
+
+func test__on_SelectActorButton_button_down():
+	var partyContainerUI = partial_double(PartyContainerUI).new()
+	watch_signals(partyContainerUI)
+	partyContainerUI._on_SelectActorButton_button_down()
+	assert_signal_emitted(partyContainerUI, "party_ui_selecting_actor")
