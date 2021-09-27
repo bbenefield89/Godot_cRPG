@@ -11,6 +11,7 @@ onready var Navigation2d := $Navigation2D
 onready var MainCamera := $MainCamera
 onready var PartyUI := $UILayer/BottomUI/BottomUIVBox/HBoxContainer/PartyContainer
 onready var ActorBar := $UILayer/BottomUI/BottomUIVBox/ActorBarContainer
+onready var BottomUIVBox := $UILayer/BottomUI/BottomUIVBox
 
 func _ready():
 	load_save("quick_save") # Only run on ready for dev purposes
@@ -83,9 +84,9 @@ func connect_ActorsContainers() -> void:
 	ActorsContainer.connect("alter_actors_portraits", PartyUI,
 			"alter_actors_portraits")
 	# warning-ignore:return_value_discarded
-	ActorsContainer.connect("show_actor_bar", ActorBar, "show")
+	ActorsContainer.connect("show_actor_bar", BottomUIVBox, "show")
 	# warning-ignore:return_value_discarded
-	ActorsContainer.connect("conceal_actor_bar", ActorBar, "conceal")
+	ActorsContainer.connect("conceal_actor_bar", BottomUIVBox, "conceal")
 
 
 func connect_PartyUI() -> void:

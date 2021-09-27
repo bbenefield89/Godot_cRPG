@@ -116,4 +116,5 @@ func set_selected_actors_target(value: KinematicBody2D) -> void:
 
 
 func set_is_selecting_actor(value: bool) -> void:
+	print("Hello")
 	is_selecting_actor = value
