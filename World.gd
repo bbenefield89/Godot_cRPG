@@ -9,7 +9,9 @@ onready var ActorsContainer := $ActorsContainer
 onready var EnemyContainer := $EnemyContainer
 onready var Navigation2d := $Navigation2D
 onready var MainCamera := $MainCamera
-onready var PartyUI := $UILayer/BottomUI/HBoxContainer/PartyContainer
+onready var PartyUI := $UILayer/BottomUI/BottomUIVBox/HBoxContainer/PartyContainer
+onready var ActorBar := $UILayer/BottomUI/BottomUIVBox/ActorBarContainer
+onready var BottomUIVBox := $UILayer/BottomUI/BottomUIVBox
 
 func _ready():
 	load_save("quick_save") # Only run on ready for dev purposes
@@ -17,6 +19,7 @@ func _ready():
 	connect_PartyUI()
 	connect_Actors()
 	connect_Enemies()
+	connect_ActorBarButtons()
 
 
 func _input(event):
@@ -61,10 +64,11 @@ func load_actors() -> void:
 		ActorsContainer.add_child(actor_tscn)
 		DataMapper.map_dict_to_actor(actor, actor_tscn)
 		
-		var actors_portrait = ActorsPortraitScene.instance()
-		actors_portraits.append(actors_portrait)
-		actors_portrait.name = actor.name
-		PartyUI.add_child(actors_portrait)
+		var ActorsPortrait = ActorsPortraitScene.instance()
+		actors_portraits.append(ActorsPortrait)
+		ActorsPortrait.name = actor.name
+		PartyUI.add_child(ActorsPortrait)
+		connect_SelectActorButton(ActorsPortrait.get_node("SelectActorButton"))
 	ActorsContainer.actors_in_party = actors_in_party
 	PartyUI.actors_portraits = actors_portraits
 
@@ -79,6 +83,10 @@ func connect_ActorsContainers() -> void:
 	# warning-ignore:return_value_discarded
 	ActorsContainer.connect("alter_actors_portraits", PartyUI,
 			"alter_actors_portraits")
+	# warning-ignore:return_value_discarded
+	ActorsContainer.connect("show_actor_bar", BottomUIVBox, "show")
+	# warning-ignore:return_value_discarded
+	ActorsContainer.connect("conceal_actor_bar", BottomUIVBox, "conceal")
 
 
 func connect_PartyUI() -> void:
@@ -108,3 +116,24 @@ func connect_Enemies() -> void:
 		enemy.Navigation2d = Navigation2d
 		SelectBox.connect("lmb_up", ActorsContainer,
 				"set_selected_actors_target", [enemy])
+
+
+func connect_SelectActorButton(button: Button) -> void:
+	# warning-ignore:return_value_discarded
+	button.connect("button_down", PartyUI, "_on_SelectActorButton_button_down")
+	# warning-ignore:return_value_discarded
+	button.connect("party_ui_actor_selected", PartyUI,
+			"_on_SelectActorButton_party_ui_actor_selected")
+	# warning-ignore:return_value_discarded
+	button.connect("party_ui_actor_selected_shift", PartyUI,
+			"_on_SelectActorButton_party_ui_actor_selected_shift")
+
+
+func connect_ActorBarButtons() -> void:
+	for ButtonContainer in ActorBar.get_children():
+		if ButtonContainer.name != "SpellsMargin":
+			for button in ButtonContainer.get_children():
+				button.connect("button_down", ActorsContainer,
+						"set_is_selecting_actor", [true])
+				button.connect("button_up", ActorsContainer,
+						"set_is_selecting_actor", [false])

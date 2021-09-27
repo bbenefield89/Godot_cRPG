@@ -1,0 +1,83 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://UI/PartyContainer.tscn" type="PackedScene" id=1]
+[ext_resource path="res://UI/ActorBarButtonBase.tscn" type="PackedScene" id=2]
+[ext_resource path="res://UI/ActorBarButtonBase.gd" type="Script" id=3]
+[ext_resource path="res://UI/PartyContainerUI.gd" type="Script" id=4]
+[ext_resource path="res://UI/BottomUIVBox.gd" type="Script" id=5]
+
+[node name="BottomUIVBox" type="VBoxContainer"]
+margin_right = 1024.0
+margin_bottom = 153.0
+script = ExtResource( 5 )
+
+[node name="ActorBarContainerHidden" type="MarginContainer" parent="."]
+visible = false
+margin_right = 1024.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 0, 40 )
+
+[node name="ActorBarContainer" type="HBoxContainer" parent="."]
+margin_right = 1024.0
+margin_bottom = 40.0
+
+[node name="Weapons" type="MarginContainer" parent="ActorBarContainer"]
+margin_right = 71.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 0, 40 )
+
+[node name="Weapons" type="Button" parent="ActorBarContainer/Weapons" instance=ExtResource( 2 )]
+margin_right = 71.0
+margin_bottom = 40.0
+mouse_default_cursor_shape = 2
+text = "Weapons"
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Backpack" type="MarginContainer" parent="ActorBarContainer"]
+margin_left = 75.0
+margin_right = 146.0
+margin_bottom = 40.0
+
+[node name="Backpack" type="Button" parent="ActorBarContainer/Backpack" instance=ExtResource( 2 )]
+margin_right = 71.0
+margin_bottom = 40.0
+mouse_default_cursor_shape = 2
+text = "Backpack"
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="SpellsMargin" type="MarginContainer" parent="ActorBarContainer"]
+margin_left = 150.0
+margin_right = 150.0
+margin_bottom = 40.0
+
+[node name="SpellsHBox" type="HBoxContainer" parent="ActorBarContainer/SpellsMargin"]
+margin_bottom = 40.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+margin_top = 44.0
+margin_right = 1024.0
+margin_bottom = 153.0
+size_flags_vertical = 3
+
+[node name="PartyContainer" type="HBoxContainer" parent="HBoxContainer" instance=ExtResource( 1 )]
+margin_bottom = 109.0
+script = ExtResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="QuickMenuContainer" type="HBoxContainer" parent="HBoxContainer"]
+margin_left = 4.0
+margin_right = 4.0
+margin_bottom = 109.0
+
+[node name="ChatBoxContainer" type="HBoxContainer" parent="HBoxContainer"]
+margin_left = 8.0
+margin_right = 8.0
+margin_bottom = 109.0

@@ -1,6 +1,8 @@
 extends Node2D
 
 signal open_esc_menu
+signal show_actor_bar
+signal conceal_actor_bar
 signal alter_actors_portraits(actors_idxs, styles)
 
 var actors_selected := Array()
@@ -40,12 +42,12 @@ func _input(_event):
 			actor.set_current_target(null)
 
 
-func handle_key_input_select_actor(num_key_value: int) -> void: ###
+func handle_key_input_select_actor(num_key_value: int) -> void: ### How do you test for is_action_press()
 	if actors_in_party.size() > num_key_value:
 		if Input.is_action_pressed("shift"):
-			select_actor(get_child(num_key_value))
+			select_actor_by_idx(num_key_value)
 		else:
-			select_only_this_actor(get_child(num_key_value))
+			select_only_this_actor_by_idx(num_key_value)
 
 
 func select_only_this_actor(actor: KinematicBody2D) -> void:
@@ -73,6 +75,10 @@ func select_actor_by_idx(actor_idx: int) -> void:
 
 func append_selected_actor(actor: KinematicBody2D) -> void:
 	actors_selected.append(actor)
+	if actors_selected.size() > 1:
+		emit_signal("conceal_actor_bar")
+	else:
+		emit_signal("show_actor_bar")
 	var styles = {
 		"background_color": "#0b2b5c",
 		"border_color": "#949494",
@@ -92,6 +98,7 @@ func deselect_all_actors() -> void:
 		"background_color": "#0b2b5c",
 	}
 	emit_signal("alter_actors_portraits", [], styles)
+	emit_signal("conceal_actor_bar")
 
 
 func is_actor_allowed_to_move(actor: KinematicBody2D) -> bool:
@@ -109,4 +116,5 @@ func set_selected_actors_target(value: KinematicBody2D) -> void:
 
 
 func set_is_selecting_actor(value: bool) -> void:
+	print("Hello")
 	is_selecting_actor = value

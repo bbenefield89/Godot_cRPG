@@ -10,6 +10,7 @@ var actors_portraits = null
 func _ready():
 	actors_portraits = get_children()
 
+
 func alter_actors_portraits(actors_idxs: Array, styles: Dictionary) -> void:
 	var style = StyleBoxFlat.new()
 	if actors_idxs:
@@ -25,7 +26,7 @@ func alter_actors_portraits(actors_idxs: Array, styles: Dictionary) -> void:
 			actors_portrait.get_node("Panel").set("custom_styles/panel", style)
 
 
-func _on_SelectActorButton_party_ui_actor_selected(button):
+func _on_SelectActorButton_party_ui_actor_selected(button) -> void:
 	emit_signal("party_ui_not_selecting_actor")
 	for idx in range(actors_portraits.size()):
 		var SelectActorButton = actors_portraits[idx].get_node(
@@ -34,7 +35,7 @@ func _on_SelectActorButton_party_ui_actor_selected(button):
 			emit_signal("party_ui_actor_selected", idx)
 
 
-func _on_SelectActorButton_party_ui_actor_selected_shift(button):
+func _on_SelectActorButton_party_ui_actor_selected_shift(button) -> void:
 	emit_signal("party_ui_not_selecting_actor")
 	for idx in range(actors_portraits.size()):
 		var SelectActorButton = actors_portraits[idx].get_node(
@@ -43,5 +44,5 @@ func _on_SelectActorButton_party_ui_actor_selected_shift(button):
 			emit_signal("party_ui_actor_selected_shift", idx)
 
 
-func _on_SelectActorButton_button_down():
+func _on_SelectActorButton_button_down() -> void:
 	emit_signal("party_ui_selecting_actor")

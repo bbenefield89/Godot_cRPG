@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=2]
 
-[ext_resource path="res://UI/SelectActorButton.gd" type="Script" id=1]
+[ext_resource path="res://UI/ActorPortraitButton.tscn" type="PackedScene" id=1]
 
 [sub_resource type="StyleBoxFlat" id=1]
 bg_color = Color( 0.0431373, 0.168627, 0.360784, 1 )
@@ -11,18 +11,18 @@ margin_right = 75.0
 margin_bottom = 118.0
 rect_min_size = Vector2( 75, 0 )
 mouse_default_cursor_shape = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="Panel" type="Panel" parent="."]
 margin_right = 75.0
 margin_bottom = 118.0
 custom_styles/panel = SubResource( 1 )
 
-[node name="SelectActorButton" type="Button" parent="."]
+[node name="SelectActorButton" parent="." instance=ExtResource( 1 )]
 margin_right = 75.0
 margin_bottom = 118.0
 mouse_default_cursor_shape = 2
 text = "Actor"
 flat = true
-script = ExtResource( 1 )
-
-[connection signal="button_up" from="SelectActorButton" to="SelectActorButton" method="_on_SelectActorButton_button_up"]
