@@ -56,12 +56,10 @@ func handle_save_data() -> void:
 
 
 func load_actors() -> void:
-	var actors_in_party = []
 	var actors_portraits = []
 	for actor in save_data.actors.actors_in_party:
 		var actor_tscn = ActorScene.instance()
-		actors_in_party.append(actor_tscn)
-		ActorsContainer.add_child(actor_tscn)
+		ActorsContainer.add_actor_to_party(actor_tscn)
 		DataMapper.map_dict_to_actor(actor, actor_tscn)
 		
 		var ActorsPortrait = ActorsPortraitScene.instance()
@@ -69,7 +67,6 @@ func load_actors() -> void:
 		ActorsPortrait.name = actor.name
 		PartyUI.add_child(ActorsPortrait)
 		connect_SelectActorButton(ActorsPortrait.get_node("SelectActorButton"))
-	ActorsContainer.actors_in_party = actors_in_party
 	PartyUI.actors_portraits = actors_portraits
 
 

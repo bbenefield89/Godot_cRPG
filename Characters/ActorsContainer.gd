@@ -7,22 +7,7 @@ signal alter_actors_portraits(actors_idxs, styles)
 
 var actors_selected := Array()
 var is_selecting_actor := false
-var actors_in_party = null
-
-func _ready():
-	actors_in_party = get_children()
-	
-	for actor in actors_in_party:
-		var actorCollider = actor.get_node("SelectBox")
-		actorCollider.connect("lmb_up", self,
-				"select_only_this_actor", [actor])
-		actorCollider.connect("lmb_up_shift", self,
-				"select_actor", [actor])
-		actorCollider.connect("lmb_down", self,
-				"set_is_selecting_actor", [true])
-		actorCollider.connect("on_mouse_exit", self, "set_is_selecting_actor",
-				[false])
-
+var actors_in_party := []
 
 func _input(_event):
 	for idx in range(actors_in_party.size()):
@@ -110,11 +95,24 @@ func is_actor_allowed_to_move(actor: KinematicBody2D) -> bool:
 	return is_actor_selected
 
 
+func add_actor_to_party(actor: KinematicBody2D) -> void:
+	add_child(actor)
+	actors_in_party.append(actor)
+	var actorCollider = actor.get_node("SelectBox")
+	actorCollider.connect("lmb_up", self,
+			"select_only_this_actor", [actor])
+	actorCollider.connect("lmb_up_shift", self,
+			"select_actor", [actor])
+	actorCollider.connect("lmb_down", self,
+			"set_is_selecting_actor", [true])
+	actorCollider.connect("on_mouse_exit", self, "set_is_selecting_actor",
+			[false])
+
+
 func set_selected_actors_target(value: KinematicBody2D) -> void:
 	for actor in actors_selected:
 		actor.set_current_target(value)
 
 
 func set_is_selecting_actor(value: bool) -> void:
-	print("Hello")
 	is_selecting_actor = value
